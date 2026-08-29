@@ -6,3 +6,4 @@
 *.exr binary
 *.psd binary
 *.meta -whitespace
+README.md -whitespace

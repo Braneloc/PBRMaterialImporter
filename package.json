@@ -1,9 +1,14 @@
 {
   "name": "uk.exo-labs.pbr-material-importer",
-  "version": "1.1.0",
-  "displayName": "ExoLabs PBR Material Importer",
+  "version": "1.1.1",
+  "displayName": "Exo-Labs PBR Material Importer",
   "description": "Drag-and-drop third-party PBR texture sets, detect common export workflows, pack pipeline-ready maps, and create HDRP/Lit or URP/Lit materials.",
   "unity": "2022.3",
+  "unityRelease": "0f1",
+  "hideInEditor": false,
+  "documentationUrl": "https://github.com/Braneloc/PBRMaterialImporter/blob/main/README.md",
+  "changelogUrl": "https://github.com/Braneloc/PBRMaterialImporter/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/Braneloc/PBRMaterialImporter/blob/main/LICENSE.md",
   "keywords": [
     "hdrp",
     "urp",
@@ -13,7 +18,8 @@
     "importer"
   ],
   "author": {
-    "name": "Braneloc"
+    "name": "Braneloc",
+    "url": "https://github.com/Braneloc"
   },
   "license": "MIT"
 }
