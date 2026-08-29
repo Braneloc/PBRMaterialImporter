@@ -100,5 +100,9 @@ Stable filenames are updated on repeat imports by default. Disable **Update matc
 
 MIT. See [LICENSE.md](LICENSE.md).
 
+## Notes
+
+- Disclaimer: Parts of this project were co-created by ChatGPT Codex.
+
 ## Party on dudes  
 ![](https://avatars.githubusercontent.com/u/9757397?s=96&v=4)
