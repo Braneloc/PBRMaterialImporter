@@ -26,7 +26,7 @@ namespace ExoLabs.PBRMaterialImporter
         private GUIStyle dropStyle;
         private GUIStyle smallNoteStyle;
 
-        [MenuItem("Tools/Rendering/PBR Material Importer")]
+        [MenuItem("Tools/ExoLabs/PBR Material Importer")]
         internal static PbrMaterialImporterWindow Open()
         {
             PbrMaterialImporterWindow window = GetWindow<PbrMaterialImporterWindow>();

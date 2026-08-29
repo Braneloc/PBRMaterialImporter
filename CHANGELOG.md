@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2 - 2026-08-29
+
+- Moved the importer menu to **Tools > ExoLabs > PBR Material Importer** to match other Exo-Labs packages.
+
 ## 1.1.1 - 2026-08-29
 
 - Made package contents visible in Unity's Project window with `hideInEditor: false`.

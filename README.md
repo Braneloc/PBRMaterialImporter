@@ -17,13 +17,13 @@ For cross-project use, either copy that folder into another project's `Assets` d
 
 1. Open **Window > Package Manager**.
 2. Choose **+ > Add package from git URL**.
-3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.1`.
+3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.2`.
 
 The Editor code is isolated in the `ExoLabs.PBRMaterialImporter.Editor` assembly and does not reference project-specific scripts or compile directly against HDRP/URP assemblies.
 
 ## Use
 
-1. Open **Tools > Rendering > PBR Material Importer**.
+1. Open **Tools > ExoLabs > PBR Material Importer**.
 2. Drag textures or folders from the Project window or Windows Explorer onto the drop area. **Assets > Create PBR Materials from Textures** is also available.
 3. Leave **Pipeline** on **Auto** to use the active render pipeline, or explicitly select **High Definition** or **Universal**.
 4. Review the detected sets. Texture roles, source channels, workflow, surface mode, normal strength, alpha cutoff, and material name remain editable.
