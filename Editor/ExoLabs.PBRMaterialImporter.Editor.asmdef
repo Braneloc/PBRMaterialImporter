@@ -1,0 +1,16 @@
+{
+  "name": "ExoLabs.PBRMaterialImporter.Editor",
+  "rootNamespace": "ExoLabs.PBRMaterialImporter",
+  "references": [],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
