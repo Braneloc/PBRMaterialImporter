@@ -9,22 +9,22 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal sealed class PbrMaterialImporterWindow : EditorWindow
     {
-        private const float DropAreaHeight = 92f;
+        const float DropAreaHeight = 92f;
 
-        [SerializeField] private List<DetectedTextureSet> textureSets = new List<DetectedTextureSet>();
-        [SerializeField] private RenderPipelineTarget pipeline = RenderPipelineTarget.Auto;
-        [SerializeField] private OutputMode outputMode = OutputMode.GeneratedSubfolder;
-        [SerializeField] private DefaultAsset customOutputFolder;
-        [SerializeField] private bool configureSourceImporters = true;
-        [SerializeField] private bool combineOpacityWithBaseColor = true;
-        [SerializeField] private bool discardNeutralTextures = true;
-        [SerializeField] private bool updateExistingAssets = true;
-        [SerializeField] private Vector2 scrollPosition;
-        [SerializeField] private string lastStatus;
-        [SerializeField] private MessageType lastStatusType = MessageType.Info;
+        [SerializeField] List<DetectedTextureSet> textureSets = new List<DetectedTextureSet>();
+        [SerializeField] RenderPipelineTarget pipeline = RenderPipelineTarget.Auto;
+        [SerializeField] OutputMode outputMode = OutputMode.GeneratedSubfolder;
+        [SerializeField] DefaultAsset customOutputFolder;
+        [SerializeField] bool configureSourceImporters = true;
+        [SerializeField] bool combineOpacityWithBaseColor = true;
+        [SerializeField] bool discardNeutralTextures = true;
+        [SerializeField] bool updateExistingAssets = true;
+        [SerializeField] Vector2 scrollPosition;
+        [SerializeField] string lastStatus;
+        [SerializeField] MessageType lastStatusType = MessageType.Info;
 
-        private GUIStyle dropStyle;
-        private GUIStyle smallNoteStyle;
+        GUIStyle dropStyle;
+        GUIStyle smallNoteStyle;
 
         [MenuItem("Tools/ExoLabs/PBR Material Importer")]
         internal static PbrMaterialImporterWindow Open()
@@ -37,25 +37,25 @@ namespace ExoLabs.PBRMaterialImporter
         }
 
         [MenuItem("Assets/Create PBR Materials from Textures", false, 2200)]
-        private static void OpenFromSelection()
+        static void OpenFromSelection()
         {
             PbrMaterialImporterWindow window = Open();
             window.AddObjects(Selection.objects, Array.Empty<string>());
         }
 
         [MenuItem("Assets/Create PBR Materials from Textures", true)]
-        private static bool ValidateOpenFromSelection()
+        static bool ValidateOpenFromSelection()
         {
             return TextureImportUtility.CollectProjectTextures(Selection.objects).Count > 0;
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             textureSets ??= new List<DetectedTextureSet>();
             titleContent = new GUIContent("PBR Importer", EditorGUIUtility.IconContent("Material Icon").image);
         }
 
-        private void OnGUI()
+        void OnGUI()
         {
             EnsureStyles();
             DrawHeader();
@@ -86,7 +86,7 @@ namespace ExoLabs.PBRMaterialImporter
             DrawFooter();
         }
 
-        private void DrawHeader()
+        void DrawHeader()
         {
             EditorGUILayout.Space(6f);
             EditorGUILayout.LabelField("ExoLabs PBR Material Importer", EditorStyles.boldLabel);
@@ -96,7 +96,7 @@ namespace ExoLabs.PBRMaterialImporter
             EditorGUILayout.Space(3f);
         }
 
-        private void DrawDropArea()
+        void DrawDropArea()
         {
             Rect rect = GUILayoutUtility.GetRect(0f, DropAreaHeight, GUILayout.ExpandWidth(true));
             GUI.Box(rect, "Drop textures or folders here\n(Project assets and files from Explorer are supported)", dropStyle);
@@ -116,7 +116,7 @@ namespace ExoLabs.PBRMaterialImporter
             current.Use();
         }
 
-        private void DrawToolbar()
+        void DrawToolbar()
         {
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
@@ -136,7 +136,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private void DrawOutputSettings()
+        void DrawOutputSettings()
         {
             EditorGUILayout.Space(5f);
             EditorGUILayout.LabelField("Output", EditorStyles.boldLabel);
@@ -173,7 +173,7 @@ namespace ExoLabs.PBRMaterialImporter
             EditorGUILayout.Space(5f);
         }
 
-        private bool DrawTextureSet(DetectedTextureSet set, int index)
+        bool DrawTextureSet(DetectedTextureSet set, int index)
         {
             bool removeSet = false;
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
@@ -228,7 +228,7 @@ namespace ExoLabs.PBRMaterialImporter
             return removeSet;
         }
 
-        private bool DrawTextureEntry(TextureEntry entry)
+        bool DrawTextureEntry(TextureEntry entry)
         {
             bool remove = false;
             using (new EditorGUILayout.HorizontalScope())
@@ -253,7 +253,7 @@ namespace ExoLabs.PBRMaterialImporter
             return remove;
         }
 
-        private void DrawFooter()
+        void DrawFooter()
         {
             if (!string.IsNullOrEmpty(lastStatus))
                 EditorGUILayout.HelpBox(lastStatus, lastStatusType);
@@ -278,7 +278,7 @@ namespace ExoLabs.PBRMaterialImporter
             EditorGUILayout.Space(5f);
         }
 
-        private void AddObjects(IEnumerable<UnityEngine.Object> objects, IEnumerable<string> dragPaths)
+        void AddObjects(IEnumerable<UnityEngine.Object> objects, IEnumerable<string> dragPaths)
         {
             IReadOnlyList<Texture2D> projectTextures = TextureImportUtility.CollectProjectTextures(objects);
             IReadOnlyList<Texture2D> externalTextures = TextureImportUtility.ImportExternalPaths(dragPaths);
@@ -329,7 +329,7 @@ namespace ExoLabs.PBRMaterialImporter
             Repaint();
         }
 
-        private static void InferUnlabelledBaseColor(DetectedTextureSet set)
+        static void InferUnlabelledBaseColor(DetectedTextureSet set)
         {
             if (set.Has(TextureSemantic.BaseColor))
                 return;
@@ -340,7 +340,7 @@ namespace ExoLabs.PBRMaterialImporter
             unknown[0].DetectionNote = "Inferred as Base Color because it is the only unlabelled texture in this set";
         }
 
-        private void CreateMaterials()
+        void CreateMaterials()
         {
             MaterialImportSettings settings = new MaterialImportSettings
             {
@@ -387,7 +387,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static bool UsesSingleChannel(TextureSemantic semantic)
+        static bool UsesSingleChannel(TextureSemantic semantic)
         {
             return semantic == TextureSemantic.Metallic ||
                    semantic == TextureSemantic.Roughness ||
@@ -398,12 +398,12 @@ namespace ExoLabs.PBRMaterialImporter
                    semantic == TextureSemantic.DetailMask;
         }
 
-        private static bool IsTextureOrFolder(UnityEngine.Object obj)
+        static bool IsTextureOrFolder(UnityEngine.Object obj)
         {
             return obj is Texture2D || AssetDatabase.IsValidFolder(AssetDatabase.GetAssetPath(obj));
         }
 
-        private void EnsureStyles()
+        void EnsureStyles()
         {
             dropStyle ??= new GUIStyle(EditorStyles.helpBox)
             {

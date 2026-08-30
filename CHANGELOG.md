@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3 - 2026-08-30
+
+- Removed redundant explicit `private` modifiers from class members without changing their effective accessibility.
+
 ## 1.1.2 - 2026-08-29
 
 - Moved the importer menu to **Tools > ExoLabs > PBR Material Importer** to match other Exo-Labs packages.

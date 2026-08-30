@@ -8,7 +8,7 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class TextureNameDetector
     {
-        private sealed class Rule
+        sealed class Rule
         {
             internal readonly TextureSemantic Semantic;
             internal readonly string[][] Aliases;
@@ -24,7 +24,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static readonly Rule[] Rules =
+        static readonly Rule[] Rules =
         {
             new Rule(TextureSemantic.HdrpMaskMap, false, "HDRP mask map (R metallic, G AO, B detail, A smoothness)", "hdrpmask", "hdrp mask", "maskmap", "mask map"),
             new Rule(TextureSemantic.MetallicRoughness, false, "glTF-style metallic-roughness pack (G roughness, B metallic)", "metallicroughness", "metallic roughness", "metalroughness", "metal roughness"),
@@ -46,7 +46,7 @@ namespace ExoLabs.PBRMaterialImporter
             new Rule(TextureSemantic.Opacity, false, "Opacity/alpha", "opacity", "transparency", "transparent", "alpha", "cutout", "mask")
         };
 
-        private static readonly HashSet<string> UtilityTokens = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        static readonly HashSet<string> UtilityTokens = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "texture", "textures", "tex", "map", "maps", "linear", "srgb", "raw", "lod0", "lod1", "lod2"
         };
@@ -100,7 +100,7 @@ namespace ExoLabs.PBRMaterialImporter
             return string.IsNullOrEmpty(sanitized) ? fallback : sanitized;
         }
 
-        private static List<string> Tokenize(string value)
+        static List<string> Tokenize(string value)
         {
             string separated = Regex.Replace(value, "([a-z])([A-Z])", "$1 $2");
             separated = Regex.Replace(separated, "([A-Za-z])([0-9])", "$1 $2");
@@ -109,7 +109,7 @@ namespace ExoLabs.PBRMaterialImporter
                 .ToList();
         }
 
-        private static void RemoveTrailingUtilityTokens(List<string> tokens)
+        static void RemoveTrailingUtilityTokens(List<string> tokens)
         {
             while (tokens.Count > 0)
             {
@@ -123,7 +123,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static int FindSuffix(IReadOnlyList<string> tokens, IReadOnlyList<string> alias)
+        static int FindSuffix(IReadOnlyList<string> tokens, IReadOnlyList<string> alias)
         {
             if (tokens.Count < alias.Count)
                 return -1;
@@ -136,13 +136,13 @@ namespace ExoLabs.PBRMaterialImporter
             return start;
         }
 
-        private static void TrimNamePrefixes(List<string> tokens)
+        static void TrimNamePrefixes(List<string> tokens)
         {
             while (tokens.Count > 1 && (tokens[0] == "t" || tokens[0] == "tex" || tokens[0] == "texture"))
                 tokens.RemoveAt(0);
         }
 
-        private static string MakeStem(IReadOnlyCollection<string> tokens, string fallback)
+        static string MakeStem(IReadOnlyCollection<string> tokens, string fallback)
         {
             string stem = string.Join("_", tokens);
             if (string.IsNullOrWhiteSpace(stem))

@@ -9,8 +9,8 @@ namespace ExoLabs.PBRMaterialImporter.Tests
 {
     internal sealed class TexturePackingAndBuilderTests
     {
-        private const string TestRoot = "Assets/__PBRMaterialImporterTests";
-        private const string MeshySampleFolder = "Assets/Meshy_AI_Damien_Cross_0829203445_texture_fbx/Meshy_AI_Damien_Cross_0829203445_texture_fbx";
+        const string TestRoot = "Assets/__PBRMaterialImporterTests";
+        const string MeshySampleFolder = "Assets/Meshy_AI_Damien_Cross_0829203445_texture_fbx/Meshy_AI_Damien_Cross_0829203445_texture_fbx";
 
         [SetUp]
         public void SetUp()
@@ -219,7 +219,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             Assert.That(pixel.a, Is.EqualTo(191));
         }
 
-        private static MaterialImportSettings Settings(RenderPipelineTarget pipeline)
+        static MaterialImportSettings Settings(RenderPipelineTarget pipeline)
         {
             return new MaterialImportSettings
             {
@@ -233,7 +233,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             };
         }
 
-        private static TextureEntry CreateEntry(Texture2D texture, TextureSemantic semantic)
+        static TextureEntry CreateEntry(Texture2D texture, TextureSemantic semantic)
         {
             TextureEntry entry = new TextureEntry(texture, TextureNameDetector.Analyze(texture.name));
             entry.Semantic = semantic;
@@ -241,7 +241,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             return entry;
         }
 
-        private static Texture2D CreateTexture(string fileName, Color32[] pixels)
+        static Texture2D CreateTexture(string fileName, Color32[] pixels)
         {
             Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false, true);
             texture.SetPixels32(pixels);
@@ -253,7 +253,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             return AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
         }
 
-        private static Color32[] ReadPng(string assetPath)
+        static Color32[] ReadPng(string assetPath)
         {
             Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false, true);
             try
@@ -267,7 +267,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             }
         }
 
-        private static Color32[] Solid(Color32 color)
+        static Color32[] Solid(Color32 color)
         {
             return new[] { color, color, color, color };
         }

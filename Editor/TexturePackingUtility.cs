@@ -9,7 +9,7 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class TexturePackingUtility
     {
-        private sealed class PixelData
+        sealed class PixelData
         {
             internal readonly int Width;
             internal readonly int Height;
@@ -23,7 +23,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private readonly struct ChannelSource
+        readonly struct ChannelSource
         {
             internal readonly TextureEntry Entry;
             internal readonly TextureChannel Channel;
@@ -233,7 +233,7 @@ namespace ExoLabs.PBRMaterialImporter
             return !string.IsNullOrEmpty(reason);
         }
 
-        private static void ApplyPackedLayout(
+        static void ApplyPackedLayout(
             TextureEntry packed,
             ref ChannelSource? metallic,
             ref ChannelSource? ao,
@@ -263,7 +263,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static Dictionary<Texture2D, PixelData> LoadUniqueData(IEnumerable<ChannelSource?> sources)
+        static Dictionary<Texture2D, PixelData> LoadUniqueData(IEnumerable<ChannelSource?> sources)
         {
             Dictionary<Texture2D, PixelData> result = new Dictionary<Texture2D, PixelData>();
             foreach (ChannelSource source in sources.Where(value => value.HasValue).Select(value => value.Value))
@@ -275,7 +275,7 @@ namespace ExoLabs.PBRMaterialImporter
             return result;
         }
 
-        private static PixelData ReadPixels(Texture2D texture, bool forceLinear)
+        static PixelData ReadPixels(Texture2D texture, bool forceLinear)
         {
             string path = AssetDatabase.GetAssetPath(texture);
             if (!(AssetImporter.GetAtPath(path) is TextureImporter importer))
@@ -324,7 +324,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static float Sample(ChannelSource? source, IReadOnlyDictionary<Texture2D, PixelData> data, float u, float v, float fallback)
+        static float Sample(ChannelSource? source, IReadOnlyDictionary<Texture2D, PixelData> data, float u, float v, float fallback)
         {
             if (!source.HasValue || source.Value.Entry?.Texture == null)
                 return fallback;
@@ -333,7 +333,7 @@ namespace ExoLabs.PBRMaterialImporter
             return value.Invert ? 1f - sample : sample;
         }
 
-        private static float SampleChannel(PixelData data, TextureChannel channel, float u, float v)
+        static float SampleChannel(PixelData data, TextureChannel channel, float u, float v)
         {
             Color32 color = SampleColor(data, u, v);
             switch (channel)
@@ -346,7 +346,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static Color32 SampleColor(PixelData data, float u, float v)
+        static Color32 SampleColor(PixelData data, float u, float v)
         {
             float px = Mathf.Clamp(u * data.Width - 0.5f, 0f, data.Width - 1f);
             float py = Mathf.Clamp(v * data.Height - 0.5f, 0f, data.Height - 1f);
@@ -363,7 +363,7 @@ namespace ExoLabs.PBRMaterialImporter
             return (Color32)Color.Lerp(Color.Lerp(c00, c10, tx), Color.Lerp(c01, c11, tx), ty);
         }
 
-        private static void WritePng(
+        static void WritePng(
             string assetPath,
             Color32[] pixels,
             int width,
@@ -389,12 +389,12 @@ namespace ExoLabs.PBRMaterialImporter
             TextureImportUtility.ConfigureGeneratedTexture(assetPath, !linear, alphaIsTransparency);
         }
 
-        private static bool HasAny(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries, params TextureSemantic[] semantics)
+        static bool HasAny(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries, params TextureSemantic[] semantics)
         {
             return semantics.Any(semantic => FirstUsable(set, semantic, ignoredEntries) != null);
         }
 
-        private static TextureEntry FirstUsable(DetectedTextureSet set, TextureSemantic semantic, ISet<TextureEntry> ignoredEntries)
+        static TextureEntry FirstUsable(DetectedTextureSet set, TextureSemantic semantic, ISet<TextureEntry> ignoredEntries)
         {
             return set.Textures.FirstOrDefault(entry =>
                 entry.Texture != null &&
@@ -402,7 +402,7 @@ namespace ExoLabs.PBRMaterialImporter
                 (ignoredEntries == null || !ignoredEntries.Contains(entry)));
         }
 
-        private static void GetChannelRange(PixelData data, TextureChannel channel, out float minimum, out float maximum)
+        static void GetChannelRange(PixelData data, TextureChannel channel, out float minimum, out float maximum)
         {
             minimum = 1f;
             maximum = 0f;
@@ -422,7 +422,7 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static byte ToByte(float value)
+        static byte ToByte(float value)
         {
             return (byte)Mathf.Clamp(Mathf.RoundToInt(value * 255f), 0, 255);
         }

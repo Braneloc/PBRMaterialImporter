@@ -17,7 +17,7 @@ For cross-project use, either copy that folder into another project's `Assets` d
 
 1. Open **Window > Package Manager**.
 2. Choose **+ > Add package from git URL**.
-3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.2`.
+3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.3`.
 
 The Editor code is isolated in the `ExoLabs.PBRMaterialImporter.Editor` assembly and does not reference project-specific scripts or compile directly against HDRP/URP assemblies.
 

@@ -9,7 +9,7 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class TextureImportUtility
     {
-        private static readonly HashSet<string> SupportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        static readonly HashSet<string> SupportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             ".png", ".jpg", ".jpeg", ".tga", ".tif", ".tiff", ".bmp", ".exr", ".hdr", ".psd"
         };
@@ -193,7 +193,7 @@ namespace ExoLabs.PBRMaterialImporter
             return updateExisting ? candidate : AssetDatabase.GenerateUniqueAssetPath(candidate);
         }
 
-        private static string GetPipelineFolderName(RenderPipelineTarget pipeline)
+        static string GetPipelineFolderName(RenderPipelineTarget pipeline)
         {
             return pipeline == RenderPipelineTarget.Universal ? "URP" : "HDRP";
         }
@@ -222,12 +222,12 @@ namespace ExoLabs.PBRMaterialImporter
             return Path.GetFullPath(Path.Combine(ProjectRoot, assetPath.Replace('/', Path.DirectorySeparatorChar)));
         }
 
-        private static bool IsWritableAssetFolder(string path)
+        static bool IsWritableAssetFolder(string path)
         {
             return !string.IsNullOrWhiteSpace(path) &&
                    (path.Equals("Assets", StringComparison.Ordinal) || path.StartsWith("Assets/", StringComparison.Ordinal));
         }
 
-        private static string ProjectRoot => Directory.GetParent(Application.dataPath)?.FullName ?? throw new InvalidOperationException("Could not resolve the Unity project root.");
+        static string ProjectRoot => Directory.GetParent(Application.dataPath)?.FullName ?? throw new InvalidOperationException("Could not resolve the Unity project root.");
     }
 }

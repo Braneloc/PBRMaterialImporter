@@ -11,8 +11,8 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class PbrMaterialBuilder
     {
-        private const string HdrpShaderName = "HDRP/Lit";
-        private const string UrpShaderName = "Universal Render Pipeline/Lit";
+        const string HdrpShaderName = "HDRP/Lit";
+        const string UrpShaderName = "Universal Render Pipeline/Lit";
 
         internal static MaterialImportResult Build(DetectedTextureSet set, MaterialImportSettings settings)
         {
@@ -153,7 +153,7 @@ namespace ExoLabs.PBRMaterialImporter
             return pipeline == RenderPipelineTarget.Universal ? "URP" : "HDRP";
         }
 
-        private static HashSet<TextureEntry> FindNeutralEntries(
+        static HashSet<TextureEntry> FindNeutralEntries(
             DetectedTextureSet set,
             MaterialImportSettings settings,
             MaterialImportResult result)
@@ -172,7 +172,7 @@ namespace ExoLabs.PBRMaterialImporter
             return ignoredEntries;
         }
 
-        private static bool UsesSpecularWorkflow(
+        static bool UsesSpecularWorkflow(
             DetectedTextureSet set,
             TextureEntry specular,
             ISet<TextureEntry> ignoredEntries,
@@ -186,7 +186,7 @@ namespace ExoLabs.PBRMaterialImporter
             return useSpecular;
         }
 
-        private static void ConfigureHdrpMaterial(
+        static void ConfigureHdrpMaterial(
             Material material,
             DetectedTextureSet set,
             Texture2D baseColor,
@@ -255,7 +255,7 @@ namespace ExoLabs.PBRMaterialImporter
             InvokeHdrpMaterialMethod("ValidateMaterial", material);
         }
 
-        private static void ConfigureUrpMaterial(
+        static void ConfigureUrpMaterial(
             Material material,
             DetectedTextureSet set,
             Texture2D baseColor,
@@ -315,7 +315,7 @@ namespace ExoLabs.PBRMaterialImporter
             material.doubleSidedGI = set.DoubleSided;
         }
 
-        private static void ConfigureUrpSurface(Material material, SurfaceMode surface, float alphaCutoff, bool doubleSided)
+        static void ConfigureUrpSurface(Material material, SurfaceMode surface, float alphaCutoff, bool doubleSided)
         {
             bool transparent = surface == SurfaceMode.Transparent;
             bool alphaClip = surface == SurfaceMode.AlphaClipping;
@@ -348,14 +348,14 @@ namespace ExoLabs.PBRMaterialImporter
             }
         }
 
-        private static SurfaceMode ResolveSurfaceMode(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries)
+        static SurfaceMode ResolveSurfaceMode(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries)
         {
             return set.SurfaceMode == SurfaceMode.Auto
                 ? (FirstUsable(set, TextureSemantic.Opacity, ignoredEntries) != null ? SurfaceMode.AlphaClipping : SurfaceMode.Opaque)
                 : set.SurfaceMode;
         }
 
-        private static void InvokeHdrpMaterialMethod(string methodName, params object[] arguments)
+        static void InvokeHdrpMaterialMethod(string methodName, params object[] arguments)
         {
             Type hdMaterial = AppDomain.CurrentDomain.GetAssemblies()
                 .Select(assembly => assembly.GetType("UnityEngine.Rendering.HighDefinition.HDMaterial", false))
@@ -368,7 +368,7 @@ namespace ExoLabs.PBRMaterialImporter
             method?.Invoke(null, arguments);
         }
 
-        private static void InvokePipelineEditorMethod(string typeName, string methodName, params object[] arguments)
+        static void InvokePipelineEditorMethod(string typeName, string methodName, params object[] arguments)
         {
             Type type = AppDomain.CurrentDomain.GetAssemblies()
                 .Select(assembly => assembly.GetType(typeName, false))
@@ -395,7 +395,7 @@ namespace ExoLabs.PBRMaterialImporter
             method.Invoke(null, invocationArguments);
         }
 
-        private static bool HasMetalInput(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries)
+        static bool HasMetalInput(DetectedTextureSet set, ISet<TextureEntry> ignoredEntries)
         {
             return FirstUsable(set, TextureSemantic.Metallic, ignoredEntries) != null ||
                    FirstUsable(set, TextureSemantic.PackedOrm, ignoredEntries) != null ||
@@ -405,7 +405,7 @@ namespace ExoLabs.PBRMaterialImporter
                    FirstUsable(set, TextureSemantic.HdrpMaskMap, ignoredEntries) != null;
         }
 
-        private static TextureEntry FirstUsable(DetectedTextureSet set, TextureSemantic semantic, ISet<TextureEntry> ignoredEntries)
+        static TextureEntry FirstUsable(DetectedTextureSet set, TextureSemantic semantic, ISet<TextureEntry> ignoredEntries)
         {
             return set.Textures.FirstOrDefault(entry =>
                 entry.Texture != null &&
@@ -413,31 +413,31 @@ namespace ExoLabs.PBRMaterialImporter
                 (ignoredEntries == null || !ignoredEntries.Contains(entry)));
         }
 
-        private static void SetTexture(Material material, string property, Texture texture)
+        static void SetTexture(Material material, string property, Texture texture)
         {
             if (material.HasProperty(property))
                 material.SetTexture(property, texture);
         }
 
-        private static void SetFloat(Material material, string property, float value)
+        static void SetFloat(Material material, string property, float value)
         {
             if (material.HasProperty(property))
                 material.SetFloat(property, value);
         }
 
-        private static void SetColor(Material material, string property, Color value)
+        static void SetColor(Material material, string property, Color value)
         {
             if (material.HasProperty(property))
                 material.SetColor(property, value);
         }
 
-        private static void SetVector(Material material, string property, Vector4 value)
+        static void SetVector(Material material, string property, Vector4 value)
         {
             if (material.HasProperty(property))
                 material.SetVector(property, value);
         }
 
-        private static void SetKeyword(Material material, string keyword, bool enabled)
+        static void SetKeyword(Material material, string keyword, bool enabled)
         {
             if (enabled)
                 material.EnableKeyword(keyword);

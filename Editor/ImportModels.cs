@@ -68,11 +68,11 @@ namespace ExoLabs.PBRMaterialImporter
     [Serializable]
     internal sealed class TextureEntry
     {
-        [SerializeField] private Texture2D texture;
-        [SerializeField] private TextureSemantic semantic;
-        [SerializeField] private TextureChannel channel;
-        [SerializeField] private bool flipNormalGreen;
-        [SerializeField] private string detectionNote;
+        [SerializeField] Texture2D texture;
+        [SerializeField] TextureSemantic semantic;
+        [SerializeField] TextureChannel channel;
+        [SerializeField] bool flipNormalGreen;
+        [SerializeField] string detectionNote;
 
         internal Texture2D Texture
         {
@@ -119,17 +119,17 @@ namespace ExoLabs.PBRMaterialImporter
     [Serializable]
     internal sealed class DetectedTextureSet
     {
-        [SerializeField] private string sourceKey;
-        [SerializeField] private string materialName;
-        [SerializeField] private bool expanded = true;
-        [SerializeField] private MaterialWorkflow workflow = MaterialWorkflow.Auto;
-        [SerializeField] private SurfaceMode surfaceMode = SurfaceMode.Auto;
-        [SerializeField] private float alphaCutoff = 0.5f;
-        [SerializeField] private float normalScale = 1f;
-        [SerializeField] private float heightAmplitudeCentimeters = 2f;
-        [SerializeField] private bool enableGpuInstancing = true;
-        [SerializeField] private bool doubleSided;
-        [SerializeField] private List<TextureEntry> textures = new List<TextureEntry>();
+        [SerializeField] string sourceKey;
+        [SerializeField] string materialName;
+        [SerializeField] bool expanded = true;
+        [SerializeField] MaterialWorkflow workflow = MaterialWorkflow.Auto;
+        [SerializeField] SurfaceMode surfaceMode = SurfaceMode.Auto;
+        [SerializeField] float alphaCutoff = 0.5f;
+        [SerializeField] float normalScale = 1f;
+        [SerializeField] float heightAmplitudeCentimeters = 2f;
+        [SerializeField] bool enableGpuInstancing = true;
+        [SerializeField] bool doubleSided;
+        [SerializeField] List<TextureEntry> textures = new List<TextureEntry>();
 
         internal string SourceKey { get => sourceKey; set => sourceKey = value; }
         internal string MaterialName { get => materialName; set => materialName = value; }
