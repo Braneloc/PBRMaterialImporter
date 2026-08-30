@@ -33,7 +33,7 @@ namespace ExoLabs.PBRMaterialImporter
             new Rule(TextureSemantic.PackedMra, false, "MRA pack (R metallic, G roughness, B AO)", "mra", "mrao"),
             new Rule(TextureSemantic.Normal, true, "DirectX tangent-space normal; green channel will be flipped", "normaldx", "normal dx", "normal directx", "nordx", "nor dx", "nrmdx", "nrm dx"),
             new Rule(TextureSemantic.Normal, false, "OpenGL tangent-space normal", "normalgl", "normal gl", "normal opengl", "norgl", "nor gl", "nrmgl", "nrm gl"),
-            new Rule(TextureSemantic.BaseColor, false, "Base color", "basecolor", "base color", "basecolour", "base colour", "albedo", "diffuse", "diff", "color", "colour", "col", "d"),
+            new Rule(TextureSemantic.BaseColor, false, "Base colour", "basecolor", "base color", "basecolour", "base colour", "albedo", "diffuse", "diff", "color", "colour", "col", "d"),
             new Rule(TextureSemantic.Normal, false, "Tangent-space normal", "normalmap", "normal map", "normal", "nrm", "nor", "n"),
             new Rule(TextureSemantic.Metallic, false, "Metallic/metalness", "metallic", "metalness", "metalic", "metal", "met", "m"),
             new Rule(TextureSemantic.Roughness, false, "Roughness; inverted while packing smoothness", "roughness", "rough", "rgh", "r"),
@@ -42,7 +42,7 @@ namespace ExoLabs.PBRMaterialImporter
             new Rule(TextureSemantic.DetailMask, false, "HDRP detail mask", "detailmask", "detail mask"),
             new Rule(TextureSemantic.Height, false, "Height/displacement", "displacement", "heightmap", "height map", "height", "disp", "depth"),
             new Rule(TextureSemantic.Emission, false, "Emission", "emissive", "emission", "emiss", "emit"),
-            new Rule(TextureSemantic.SpecularColor, false, "Specular color workflow", "specularcolor", "specular color", "specular", "spec", "reflectivity"),
+            new Rule(TextureSemantic.SpecularColor, false, "Specular colour workflow", "specularcolor", "specular color", "specular", "spec", "reflectivity"),
             new Rule(TextureSemantic.Opacity, false, "Opacity/alpha", "opacity", "transparency", "transparent", "alpha", "cutout", "mask")
         };
 
@@ -51,7 +51,7 @@ namespace ExoLabs.PBRMaterialImporter
             "texture", "textures", "tex", "map", "maps", "linear", "srgb", "raw", "lod0", "lod1", "lod2"
         };
 
-        internal static TextureNameAnalysis Analyze(string fileName)
+        internal static TextureNameAnalysis Analyse(string fileName)
         {
             string rawName = Path.GetFileNameWithoutExtension(fileName) ?? string.Empty;
             List<string> originalTokens = Tokenize(rawName);
@@ -89,15 +89,15 @@ namespace ExoLabs.PBRMaterialImporter
                 "No known texture role was found in the filename");
         }
 
-        internal static string SanitizeAssetName(string value, string fallback = "Material")
+        internal static string SanitiseAssetName(string value, string fallback = "Material")
         {
             if (string.IsNullOrWhiteSpace(value))
                 return fallback;
 
-            string sanitized = string.Join("_", value.Trim().Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
-            sanitized = Regex.Replace(sanitized, @"\s+", "_");
-            sanitized = Regex.Replace(sanitized, @"_+", "_").Trim('_', '.');
-            return string.IsNullOrEmpty(sanitized) ? fallback : sanitized;
+            string sanitised = string.Join("_", value.Trim().Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries));
+            sanitised = Regex.Replace(sanitised, @"\s+", "_");
+            sanitised = Regex.Replace(sanitised, @"_+", "_").Trim('_', '.');
+            return string.IsNullOrEmpty(sanitised) ? fallback : sanitised;
         }
 
         static List<string> Tokenize(string value)
@@ -147,7 +147,7 @@ namespace ExoLabs.PBRMaterialImporter
             string stem = string.Join("_", tokens);
             if (string.IsNullOrWhiteSpace(stem))
                 stem = fallback;
-            return SanitizeAssetName(stem, "Material");
+            return SanitiseAssetName(stem, "Material");
         }
     }
 }

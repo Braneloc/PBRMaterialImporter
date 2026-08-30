@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ExoLabs.PBRMaterialImporter
 {
@@ -126,7 +127,8 @@ namespace ExoLabs.PBRMaterialImporter
         [SerializeField] SurfaceMode surfaceMode = SurfaceMode.Auto;
         [SerializeField] float alphaCutoff = 0.5f;
         [SerializeField] float normalScale = 1f;
-        [SerializeField] float heightAmplitudeCentimeters = 2f;
+        [FormerlySerializedAs("heightAmplitudeCentimeters")]
+        [SerializeField] float heightAmplitudeCentimetres = 2f;
         [SerializeField] bool enableGpuInstancing = true;
         [SerializeField] bool doubleSided;
         [SerializeField] List<TextureEntry> textures = new List<TextureEntry>();
@@ -138,7 +140,7 @@ namespace ExoLabs.PBRMaterialImporter
         internal SurfaceMode SurfaceMode { get => surfaceMode; set => surfaceMode = value; }
         internal float AlphaCutoff { get => alphaCutoff; set => alphaCutoff = Mathf.Clamp01(value); }
         internal float NormalScale { get => normalScale; set => normalScale = Mathf.Max(0f, value); }
-        internal float HeightAmplitudeCentimeters { get => heightAmplitudeCentimeters; set => heightAmplitudeCentimeters = Mathf.Max(0f, value); }
+        internal float HeightAmplitudeCentimetres { get => heightAmplitudeCentimetres; set => heightAmplitudeCentimetres = Mathf.Max(0f, value); }
         internal bool EnableGpuInstancing { get => enableGpuInstancing; set => enableGpuInstancing = value; }
         internal bool DoubleSided { get => doubleSided; set => doubleSided = value; }
         internal List<TextureEntry> Textures => textures;
@@ -176,11 +178,11 @@ namespace ExoLabs.PBRMaterialImporter
             if (textures.All(entry => entry.Texture == null))
                 issues.Add("Add at least one texture.");
             if (textures.Count(entry => entry.Texture != null && entry.Semantic == TextureSemantic.BaseColor) > 1)
-                issues.Add("More than one Base Color is assigned; the first will be used.");
+                issues.Add("More than one Base Colour is assigned; the first will be used.");
             if (Has(TextureSemantic.Roughness) && Has(TextureSemantic.Smoothness))
                 issues.Add("Both Roughness and Smoothness are assigned; Smoothness takes priority.");
             if (Has(TextureSemantic.Metallic) && Has(TextureSemantic.SpecularColor) && workflow == MaterialWorkflow.Auto)
-                issues.Add("Both Metallic and Specular Color are assigned; Auto uses the metallic workflow.");
+                issues.Add("Both Metallic and Specular Colour are assigned; Auto uses the metallic workflow.");
             if (textures.Any(entry => entry.Texture != null && entry.Semantic == TextureSemantic.Unknown))
                 issues.Add("Unknown textures are ignored until a role is assigned.");
             return issues;

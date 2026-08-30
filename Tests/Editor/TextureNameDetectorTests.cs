@@ -13,7 +13,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
         [TestCase("aerial_rocks_04_nor_gl_4k.exr", TextureSemantic.Normal, "aerial_rocks_04")]
         public void DetectsCommonPbrNames(string fileName, TextureSemantic expectedSemantic, string expectedStem)
         {
-            TextureNameAnalysis result = TextureNameDetector.Analyze(fileName);
+            TextureNameAnalysis result = TextureNameDetector.Analyse(fileName);
 
             Assert.That(result.Semantic, Is.EqualTo(expectedSemantic));
             Assert.That(result.Stem, Is.EqualTo(expectedStem));
@@ -22,18 +22,18 @@ namespace ExoLabs.PBRMaterialImporter.Tests
         [Test]
         public void DetectsDirectXNormalFlip()
         {
-            Assert.That(TextureNameDetector.Analyze("Fabric_NormalDX.png").FlipNormalGreen, Is.True);
-            Assert.That(TextureNameDetector.Analyze("Fabric_NormalGL.png").FlipNormalGreen, Is.False);
+            Assert.That(TextureNameDetector.Analyse("Fabric_NormalDX.png").FlipNormalGreen, Is.True);
+            Assert.That(TextureNameDetector.Analyse("Fabric_NormalGL.png").FlipNormalGreen, Is.False);
         }
 
         [Test]
         public void MeshySampleBaseAndMapsShareTheSameStem()
         {
             const string sample = "Meshy_AI_Damien_Cross_0829203445_texture";
-            TextureNameAnalysis baseColor = TextureNameDetector.Analyze(sample + ".png");
-            TextureNameAnalysis normal = TextureNameDetector.Analyze(sample + "_normal.png");
-            TextureNameAnalysis metallic = TextureNameDetector.Analyze(sample + "_metallic.png");
-            TextureNameAnalysis roughness = TextureNameDetector.Analyze(sample + "_roughness.png");
+            TextureNameAnalysis baseColor = TextureNameDetector.Analyse(sample + ".png");
+            TextureNameAnalysis normal = TextureNameDetector.Analyse(sample + "_normal.png");
+            TextureNameAnalysis metallic = TextureNameDetector.Analyse(sample + "_metallic.png");
+            TextureNameAnalysis roughness = TextureNameDetector.Analyse(sample + "_roughness.png");
 
             Assert.That(baseColor.Semantic, Is.EqualTo(TextureSemantic.Unknown));
             Assert.That(normal.Semantic, Is.EqualTo(TextureSemantic.Normal));

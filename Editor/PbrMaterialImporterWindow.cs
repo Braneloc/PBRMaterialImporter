@@ -150,10 +150,10 @@ namespace ExoLabs.PBRMaterialImporter
             using (new EditorGUI.IndentLevelScope())
             {
                 configureSourceImporters = EditorGUILayout.ToggleLeft(
-                    new GUIContent("Configure source texture importers", "Sets color/data color space, normal-map type, mipmaps, and DirectX normal green-channel flipping."),
+                    new GUIContent("Configure source texture importers", "Sets colour/data colour space, normal-map type, mipmaps, and DirectX normal green-channel flipping."),
                     configureSourceImporters);
                 combineOpacityWithBaseColor = EditorGUILayout.ToggleLeft(
-                    new GUIContent("Pack separate opacity into Base Color alpha", "Creates a derived BaseColorAlpha PNG without modifying the source color texture."),
+                    new GUIContent("Pack separate opacity into Base Colour alpha", "Creates a derived BaseColorAlpha PNG without modifying the source colour texture."),
                     combineOpacityWithBaseColor);
                 discardNeutralTextures = EditorGUILayout.ToggleLeft(
                     new GUIContent("Ignore semantically blank maps", "Ignores neutral inputs such as black metallic/emission, white AO/opacity, and height maps with no variation. Source files are never deleted."),
@@ -201,7 +201,7 @@ namespace ExoLabs.PBRMaterialImporter
                     set.AlphaCutoff = EditorGUILayout.Slider("Alpha Cutoff", set.AlphaCutoff, 0f, 1f);
                 set.NormalScale = EditorGUILayout.Slider("Normal Scale", set.NormalScale, 0f, 4f);
                 if (set.Has(TextureSemantic.Height))
-                    set.HeightAmplitudeCentimeters = EditorGUILayout.FloatField("Height Amplitude (cm)", set.HeightAmplitudeCentimeters);
+                    set.HeightAmplitudeCentimetres = EditorGUILayout.FloatField("Height Amplitude (cm)", set.HeightAmplitudeCentimetres);
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     set.EnableGpuInstancing = EditorGUILayout.ToggleLeft("GPU Instancing", set.EnableGpuInstancing, GUILayout.Width(120f));
@@ -304,7 +304,7 @@ namespace ExoLabs.PBRMaterialImporter
                 if (textureSets.SelectMany(set => set.Textures).Any(entry => string.Equals(entry.AssetPath, path, StringComparison.OrdinalIgnoreCase)))
                     continue;
 
-                TextureNameAnalysis analysis = TextureNameDetector.Analyze(texture.name);
+                TextureNameAnalysis analysis = TextureNameDetector.Analyse(texture.name);
                 string directory = (Path.GetDirectoryName(path) ?? "Assets").Replace('\\', '/');
                 string sourceKey = directory.ToLowerInvariant() + "|" + analysis.Stem.ToLowerInvariant();
                 DetectedTextureSet set = textureSets.FirstOrDefault(candidate => string.Equals(candidate.SourceKey, sourceKey, StringComparison.Ordinal));
@@ -337,7 +337,7 @@ namespace ExoLabs.PBRMaterialImporter
             if (unknown.Count != 1)
                 return;
             unknown[0].Semantic = TextureSemantic.BaseColor;
-            unknown[0].DetectionNote = "Inferred as Base Color because it is the only unlabelled texture in this set";
+            unknown[0].DetectionNote = "Inferred as Base Colour because it is the only unlabelled texture in this set";
         }
 
         void CreateMaterials()

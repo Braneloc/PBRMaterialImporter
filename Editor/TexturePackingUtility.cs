@@ -145,10 +145,10 @@ namespace ExoLabs.PBRMaterialImporter
                 for (int x = 0; x < width; x++)
                 {
                     float u = (x + 0.5f) / width;
-                    Color32 color = baseData == null ? new Color32(255, 255, 255, 255) : SampleColor(baseData, u, v);
+                    Color32 colour = baseData == null ? new Color32(255, 255, 255, 255) : SampleColour(baseData, u, v);
                     float alpha = SampleChannel(opacityData, opacitySource.Channel, u, v);
-                    color.a = ToByte(alpha);
-                    output[y * width + x] = color;
+                    colour.a = ToByte(alpha);
+                    output[y * width + x] = colour;
                 }
             }
 
@@ -175,13 +175,13 @@ namespace ExoLabs.PBRMaterialImporter
                 for (int x = 0; x < width; x++)
                 {
                     float u = (x + 0.5f) / width;
-                    Color32 color = specularData == null
+                    Color32 colour = specularData == null
                         ? new Color32(255, 255, 255, 255)
-                        : SampleColor(specularData, u, v);
-                    color.a = surfaceData == null
+                        : SampleColour(specularData, u, v);
+                    colour.a = surfaceData == null
                         ? (byte)128
-                        : SampleColor(surfaceData, u, v).a;
-                    output[y * width + x] = color;
+                        : SampleColour(surfaceData, u, v).a;
+                    output[y * width + x] = colour;
                 }
             }
 
@@ -226,7 +226,7 @@ namespace ExoLabs.PBRMaterialImporter
                     PixelData data = ReadPixels(entry.Texture, false);
                     bool black = data.Pixels.All(pixel => pixel.r <= 1 && pixel.g <= 1 && pixel.b <= 1);
                     if (black)
-                        reason = "it contains no emissive color";
+                        reason = "it contains no emissive colour";
                     break;
                 }
             }
@@ -335,18 +335,18 @@ namespace ExoLabs.PBRMaterialImporter
 
         static float SampleChannel(PixelData data, TextureChannel channel, float u, float v)
         {
-            Color32 color = SampleColor(data, u, v);
+            Color32 colour = SampleColour(data, u, v);
             switch (channel)
             {
-                case TextureChannel.Green: return color.g / 255f;
-                case TextureChannel.Blue: return color.b / 255f;
-                case TextureChannel.Alpha: return color.a / 255f;
-                case TextureChannel.Luminance: return (0.2126f * color.r + 0.7152f * color.g + 0.0722f * color.b) / 255f;
-                default: return color.r / 255f;
+                case TextureChannel.Green: return colour.g / 255f;
+                case TextureChannel.Blue: return colour.b / 255f;
+                case TextureChannel.Alpha: return colour.a / 255f;
+                case TextureChannel.Luminance: return (0.2126f * colour.r + 0.7152f * colour.g + 0.0722f * colour.b) / 255f;
+                default: return colour.r / 255f;
             }
         }
 
-        static Color32 SampleColor(PixelData data, float u, float v)
+        static Color32 SampleColour(PixelData data, float u, float v)
         {
             float px = Mathf.Clamp(u * data.Width - 0.5f, 0f, data.Width - 1f);
             float py = Mathf.Clamp(v * data.Height - 0.5f, 0f, data.Height - 1f);

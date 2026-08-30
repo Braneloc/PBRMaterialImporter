@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.4 - 2026-08-30
+
+- Standardised project-authored wording and internal helper names using British English while retaining required Unity API, shader-property, manifest-schema, and third-party texture names.
+
 ## 1.1.3 - 2026-08-30
 
 - Removed redundant explicit `private` modifiers from class members without changing their effective accessibility.
@@ -12,7 +16,7 @@
 
 - Made package contents visible in Unity's Project window with `hideInEditor: false`.
 - Matched the Exo-Labs package display-name style and added the standard README signature.
-- Completed documentation, license, changelog, Unity-release, and author manifest metadata.
+- Completed documentation, licence, changelog, Unity-release, and author manifest metadata.
 
 ## 1.1.0 - 2026-08-29
 
@@ -26,5 +30,5 @@
 - Initial drag-and-drop HDRP texture importer.
 - Automatic filename grouping and semantic detection.
 - HDRP mask packing from separate roughness/smoothness data and common packed layouts.
-- Metallic and specular-color workflows.
+- Metallic and specular-colour workflows.
 - External file/folder ingestion, generated output folders, alpha packing, DirectX normal correction, and neutral-map filtering.

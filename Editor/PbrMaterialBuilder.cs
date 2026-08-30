@@ -39,7 +39,7 @@ namespace ExoLabs.PBRMaterialImporter
             TextureEntry specular = FirstUsable(set, TextureSemantic.SpecularColor, ignoredEntries);
             bool useSpecularWorkflow = UsesSpecularWorkflow(set, specular, ignoredEntries, result);
 
-            string assetName = TextureNameDetector.SanitizeAssetName(set.MaterialName);
+            string assetName = TextureNameDetector.SanitiseAssetName(set.MaterialName);
             string outputFolder = TextureImportUtility.ResolveOutputFolder(set, settings);
             string materialPath = TextureImportUtility.ResolveAssetPath(outputFolder, assetName + ".mat", settings.UpdateExistingAssets);
             string surfaceSuffix = pipeline == RenderPipelineTarget.HighDefinition ? "_MaskMap.png" : "_MetallicOcclusionSmoothness.png";
@@ -200,7 +200,7 @@ namespace ExoLabs.PBRMaterialImporter
             TextureEntry specular = FirstUsable(set, TextureSemantic.SpecularColor, ignoredEntries);
 
             SetTexture(material, "_BaseColorMap", baseColor);
-            SetColor(material, "_BaseColor", Color.white);
+            SetColour(material, "_BaseColor", Color.white);
             SetTexture(material, "_NormalMap", normal?.Texture);
             SetFloat(material, "_NormalScale", set.NormalScale);
             SetTexture(material, "_MaskMap", maskMap);
@@ -215,20 +215,20 @@ namespace ExoLabs.PBRMaterialImporter
 
             SetFloat(material, "_MaterialID", useSpecularWorkflow ? 4f : 1f);
             SetTexture(material, "_SpecularColorMap", useSpecularWorkflow ? specular?.Texture : null);
-            SetColor(material, "_SpecularColor", Color.white);
+            SetColour(material, "_SpecularColor", Color.white);
 
             SetTexture(material, "_HeightMap", height?.Texture);
             SetFloat(material, "_HeightMapParametrization", 1f);
-            SetFloat(material, "_HeightPoMAmplitude", set.HeightAmplitudeCentimeters);
-            SetFloat(material, "_HeightTessAmplitude", set.HeightAmplitudeCentimeters);
+            SetFloat(material, "_HeightPoMAmplitude", set.HeightAmplitudeCentimetres);
+            SetFloat(material, "_HeightTessAmplitude", set.HeightAmplitudeCentimetres);
             SetFloat(material, "_HeightTessCenter", 0.5f);
             SetFloat(material, "_HeightCenter", 0.5f);
-            SetFloat(material, "_HeightAmplitude", set.HeightAmplitudeCentimeters * 0.01f);
+            SetFloat(material, "_HeightAmplitude", set.HeightAmplitudeCentimetres * 0.01f);
             SetFloat(material, "_DisplacementMode", 0f);
 
             SetTexture(material, "_EmissiveColorMap", emission?.Texture);
-            SetColor(material, "_EmissiveColor", emission == null ? Color.black : Color.white);
-            SetColor(material, "_EmissiveColorLDR", emission == null ? Color.black : Color.white);
+            SetColour(material, "_EmissiveColor", emission == null ? Color.black : Color.white);
+            SetColour(material, "_EmissiveColorLDR", emission == null ? Color.black : Color.white);
             SetFloat(material, "_UseEmissiveIntensity", 0f);
             material.globalIlluminationFlags = emission == null
                 ? MaterialGlobalIlluminationFlags.EmissiveIsBlack
@@ -270,7 +270,7 @@ namespace ExoLabs.PBRMaterialImporter
             TextureEntry height = FirstUsable(set, TextureSemantic.Height, ignoredEntries);
 
             SetTexture(material, "_BaseMap", baseColor);
-            SetColor(material, "_BaseColor", Color.white);
+            SetColour(material, "_BaseColor", Color.white);
             SetTexture(material, "_BumpMap", normal?.Texture);
             SetFloat(material, "_BumpScale", set.NormalScale);
             SetKeyword(material, "_NORMALMAP", normal != null);
@@ -280,7 +280,7 @@ namespace ExoLabs.PBRMaterialImporter
             if (useSpecularWorkflow)
             {
                 SetTexture(material, "_SpecGlossMap", specularSmoothness);
-                SetColor(material, "_SpecColor", Color.white);
+                SetColour(material, "_SpecColor", Color.white);
                 SetTexture(material, "_MetallicGlossMap", null);
                 SetKeyword(material, "_METALLICSPECGLOSSMAP", specularSmoothness != null);
             }
@@ -299,7 +299,7 @@ namespace ExoLabs.PBRMaterialImporter
             SetKeyword(material, "_OCCLUSIONMAP", surfaceMap != null);
 
             SetTexture(material, "_EmissionMap", emission?.Texture);
-            SetColor(material, "_EmissionColor", emission == null ? Color.black : Color.white);
+            SetColour(material, "_EmissionColor", emission == null ? Color.black : Color.white);
             SetKeyword(material, "_EMISSION", emission != null);
             material.globalIlluminationFlags = emission == null
                 ? MaterialGlobalIlluminationFlags.EmissiveIsBlack
@@ -425,7 +425,7 @@ namespace ExoLabs.PBRMaterialImporter
                 material.SetFloat(property, value);
         }
 
-        static void SetColor(Material material, string property, Color value)
+        static void SetColour(Material material, string property, Color value)
         {
             if (material.HasProperty(property))
                 material.SetColor(property, value);

@@ -134,7 +134,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             Assert.That(textures, Has.Count.EqualTo(4));
 
             List<(Texture2D texture, TextureNameAnalysis analysis)> analyses = textures
-                .Select(texture => (texture, TextureNameDetector.Analyze(texture.name)))
+                .Select(texture => (texture, TextureNameDetector.Analyse(texture.name)))
                 .ToList();
             Assert.That(analyses.Select(item => item.analysis.Stem).Distinct().Count(), Is.EqualTo(1));
 
@@ -235,7 +235,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
 
         static TextureEntry CreateEntry(Texture2D texture, TextureSemantic semantic)
         {
-            TextureEntry entry = new TextureEntry(texture, TextureNameDetector.Analyze(texture.name));
+            TextureEntry entry = new TextureEntry(texture, TextureNameDetector.Analyse(texture.name));
             entry.Semantic = semantic;
             entry.Channel = TextureChannel.Red;
             return entry;
@@ -267,9 +267,9 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             }
         }
 
-        static Color32[] Solid(Color32 color)
+        static Color32[] Solid(Color32 colour)
         {
-            return new[] { color, color, color, color };
+            return new[] { colour, colour, colour, colour };
         }
     }
 }

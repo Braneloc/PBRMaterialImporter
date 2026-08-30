@@ -29,7 +29,7 @@ namespace ExoLabs.PBRMaterialImporter
                 return;
 
             bool normal = entry.Semantic == TextureSemantic.Normal;
-            bool color = entry.Semantic == TextureSemantic.BaseColor ||
+            bool colour = entry.Semantic == TextureSemantic.BaseColor ||
                          entry.Semantic == TextureSemantic.Emission ||
                          entry.Semantic == TextureSemantic.SpecularColor;
             TextureImporterType desiredType = normal ? TextureImporterType.NormalMap : TextureImporterType.Default;
@@ -41,9 +41,9 @@ namespace ExoLabs.PBRMaterialImporter
                 changed = true;
             }
 
-            if (!normal && importer.sRGBTexture != color)
+            if (!normal && importer.sRGBTexture != colour)
             {
-                importer.sRGBTexture = color;
+                importer.sRGBTexture = colour;
                 changed = true;
             }
 
@@ -138,7 +138,7 @@ namespace ExoLabs.PBRMaterialImporter
                 AssetDatabase.StartAssetEditing();
                 foreach (string sourceFile in files.Distinct(StringComparer.OrdinalIgnoreCase))
                 {
-                    string safeName = TextureNameDetector.SanitizeAssetName(Path.GetFileNameWithoutExtension(sourceFile), "Texture") + Path.GetExtension(sourceFile).ToLowerInvariant();
+                    string safeName = TextureNameDetector.SanitiseAssetName(Path.GetFileNameWithoutExtension(sourceFile), "Texture") + Path.GetExtension(sourceFile).ToLowerInvariant();
                     string destination = AssetDatabase.GenerateUniqueAssetPath(destinationFolder + "/" + safeName);
                     File.Copy(sourceFile, AssetPathToFullPath(destination), false);
                     importedPaths.Add(destination);
@@ -182,7 +182,7 @@ namespace ExoLabs.PBRMaterialImporter
                 return generatedFolder;
             }
 
-            string fallback = "Assets/PBRMaterialImports/" + TextureNameDetector.SanitizeAssetName(set.MaterialName);
+            string fallback = "Assets/PBRMaterialImports/" + TextureNameDetector.SanitiseAssetName(set.MaterialName);
             EnsureAssetFolder(fallback);
             return fallback;
         }
@@ -200,13 +200,13 @@ namespace ExoLabs.PBRMaterialImporter
 
         internal static void EnsureAssetFolder(string assetFolder)
         {
-            string normalized = (assetFolder ?? string.Empty).Replace('\\', '/').TrimEnd('/');
-            if (AssetDatabase.IsValidFolder(normalized))
+            string normalised = (assetFolder ?? string.Empty).Replace('\\', '/').TrimEnd('/');
+            if (AssetDatabase.IsValidFolder(normalised))
                 return;
-            if (!normalized.Equals("Assets", StringComparison.Ordinal) && !normalized.StartsWith("Assets/", StringComparison.Ordinal))
-                throw new InvalidOperationException("Output folders must be inside Assets: " + normalized);
+            if (!normalised.Equals("Assets", StringComparison.Ordinal) && !normalised.StartsWith("Assets/", StringComparison.Ordinal))
+                throw new InvalidOperationException("Output folders must be inside Assets: " + normalised);
 
-            string[] segments = normalized.Split('/');
+            string[] segments = normalised.Split('/');
             string current = segments[0];
             for (int i = 1; i < segments.Length; i++)
             {

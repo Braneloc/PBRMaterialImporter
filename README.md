@@ -17,7 +17,7 @@ For cross-project use, either copy that folder into another project's `Assets` d
 
 1. Open **Window > Package Manager**.
 2. Choose **+ > Add package from git URL**.
-3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.3`.
+3. Enter `https://github.com/Braneloc/PBRMaterialImporter.git#v1.1.4`.
 
 The Editor code is isolated in the `ExoLabs.PBRMaterialImporter.Editor` assembly and does not reference project-specific scripts or compile directly against HDRP/URP assemblies.
 
@@ -33,20 +33,20 @@ External files are copied into `Assets/PBRMaterialImports/SourceTextures` before
 
 By default, sources from one directory produce an `HDRP` or `URP` subfolder beside them. Sets assembled from multiple locations fall back to `Assets/PBRMaterialImports/<MaterialName>`. Outputs can instead be written beside the sources or into a selected custom `Assets` folder.
 
-## Recognized workflows
+## Recognised workflows
 
-Common suffixes from Substance 3D Painter, Quixel/Megascans, Blender, Poly Haven, glTF, Unreal-style exports, and generic PBR tools are recognized.
+Common suffixes from Substance 3D Painter, Quixel/Megascans, Blender, Poly Haven, glTF, Unreal-style exports, and generic PBR tools are recognised.
 
 | Input role | Example suffixes |
 | --- | --- |
-| Base color | `BaseColor`, `Albedo`, `Diffuse`, `Diff`, `Color`, `_D` |
+| Base colour | `BaseColor`, `Albedo`, `Diffuse`, `Diff`, `Color`, `_D` |
 | Normal | `Normal`, `NormalGL`, `NormalDX`, `Nor_GL`, `_N` |
 | Metal | `Metallic`, `Metalness`, `Metal`, `_M` |
 | Rough/smooth | `Roughness`, `Rough`, `Smoothness`, `Glossiness`, `Gloss` |
 | Occlusion | `AO`, `AmbientOcclusion`, `Occlusion` |
 | Other | `Height`, `Displacement`, `Emission`, `Opacity`, `DetailMask`, `Specular` |
 
-Resolution and UDIM suffixes such as `_4K` and `_1001` do not prevent matching. A single unlabelled texture in a set is inferred as its Base Color, supporting exports where the color texture has no suffix.
+Resolution and UDIM suffixes such as `_4K` and `_1001` do not prevent matching. A single unlabelled texture in a set is inferred as its base colour, supporting exports where the colour texture has no suffix.
 
 ### Packed input conversion
 
@@ -59,7 +59,7 @@ The primary generated surface pack uses this layout:
 | B | Detail mask | Mask Map | Reserved |
 | A | Smoothness | Mask Map | Metallic Gloss Map |
 
-For URP metallic workflow, one generated texture is assigned to both Metallic and Occlusion slots. URP samples the channels it needs. For URP specular workflow, the importer generates an sRGB Specular Smoothness texture with specular color in RGB and smoothness in alpha.
+For URP metallic workflow, one generated texture is assigned to both Metallic and Occlusion slots. URP samples the channels it needs. For URP specular workflow, the importer generates an sRGB Specular Smoothness texture with specular colour in RGB and smoothness in alpha.
 
 The importer converts these common source layouts:
 
@@ -73,15 +73,15 @@ The importer converts these common source layouts:
 
 Separate roughness is inverted into smoothness. Separate smoothness/gloss is copied directly. Maps with different resolutions are bilinearly resampled to the largest input resolution.
 
-Metallic and specular-color workflows are supported. **Auto** selects specular color only when a specular map exists without metallic input.
+Metallic and specular-colour workflows are supported. **Auto** selects specular colour only when a specular map exists without metallic input.
 
 ## Import safeguards
 
 - **Ignore semantically blank maps** is enabled by default. All-black metallic or emission maps, all-white AO or opacity maps, and height maps with no variation are ignored. Source files are reported but never deleted.
 - DirectX normal filenames such as `NormalDX` enable Unity's green-channel flip. OpenGL names leave it unchanged.
 - Source textures are made readable and uncompressed only temporarily during CPU packing. Their previous settings are restored afterward.
-- Data textures and generated surface packs are imported as linear; color, emission, and specular packs are sRGB; normals use Unity's Normal Map importer.
-- Separate opacity is packed into a generated Base Color alpha texture. The original color texture is not modified.
+- Data textures and generated surface packs are imported as linear; colour, emission, and specular packs are sRGB; normals use Unity's Normal Map importer.
+- Separate opacity is packed into a generated base-colour alpha texture. The original colour texture is not modified.
 - Height is assigned conservatively in HDRP with displacement disabled. URP/Lit has no built-in height input, so URP imports report and leave height unassigned.
 
 ## Generated files
@@ -96,9 +96,9 @@ Depending on the inputs and pipeline, each material set can create:
 
 Stable filenames are updated on repeat imports by default. Disable **Update matching generated assets** to create unique copies.
 
-## License
+## Licence
 
-MIT. See [LICENSE.md](LICENSE.md).
+MIT Licence. See [LICENSE.md](LICENSE.md).
 
 ## Notes
 
