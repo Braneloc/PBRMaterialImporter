@@ -10,21 +10,21 @@ namespace ExoLabs.PBRMaterialImporter
     {
         sealed class Rule
         {
-            internal readonly TextureSemantic Semantic;
-            internal readonly string[][] Aliases;
-            internal readonly bool FlipGreen;
-            internal readonly string Note;
+            internal readonly TextureSemantic semantic;
+            internal readonly string[][] aliases;
+            internal readonly bool flipGreen;
+            internal readonly string note;
 
             internal Rule(TextureSemantic semantic, bool flipGreen, string note, params string[] aliases)
             {
-                Semantic = semantic;
-                FlipGreen = flipGreen;
-                Note = note;
-                Aliases = aliases.Select(alias => alias.Split(' ')).ToArray();
+                this.semantic = semantic;
+                this.flipGreen = flipGreen;
+                this.note = note;
+                this.aliases = aliases.Select(alias => alias.Split(' ')).ToArray();
             }
         }
 
-        static readonly Rule[] Rules =
+        static readonly Rule[] rules =
         {
             new Rule(TextureSemantic.HdrpMaskMap, false, "HDRP mask map (R metallic, G AO, B detail, A smoothness)", "hdrpmask", "hdrp mask", "maskmap", "mask map"),
             new Rule(TextureSemantic.MetallicRoughness, false, "glTF-style metallic-roughness pack (G roughness, B metallic)", "metallicroughness", "metallic roughness", "metalroughness", "metal roughness"),
@@ -46,7 +46,7 @@ namespace ExoLabs.PBRMaterialImporter
             new Rule(TextureSemantic.Opacity, false, "Opacity/alpha", "opacity", "transparency", "transparent", "alpha", "cutout", "mask")
         };
 
-        static readonly HashSet<string> UtilityTokens = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        static readonly HashSet<string> utilityTokens = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "texture", "textures", "tex", "map", "maps", "linear", "srgb", "raw", "lod0", "lod1", "lod2"
         };
@@ -58,9 +58,9 @@ namespace ExoLabs.PBRMaterialImporter
             List<string> workingTokens = new List<string>(originalTokens);
             RemoveTrailingUtilityTokens(workingTokens);
 
-            foreach (Rule rule in Rules)
+            foreach (Rule rule in rules)
             {
-                foreach (string[] alias in rule.Aliases.OrderByDescending(value => value.Length))
+                foreach (string[] alias in rule.aliases.OrderByDescending(value => value.Length))
                 {
                     int matchIndex = FindSuffix(workingTokens, alias);
                     if (matchIndex < 0)
@@ -70,12 +70,7 @@ namespace ExoLabs.PBRMaterialImporter
                     RemoveTrailingUtilityTokens(stemTokens);
                     TrimNamePrefixes(stemTokens);
                     string stem = MakeStem(stemTokens, rawName);
-                    return new TextureNameAnalysis(
-                        rule.Semantic,
-                        stem,
-                        TextureChannel.Red,
-                        rule.FlipGreen,
-                        rule.Note);
+                    return new TextureNameAnalysis(rule.semantic, stem, TextureChannel.Red, rule.flipGreen, rule.note);
                 }
             }
 
@@ -117,7 +112,7 @@ namespace ExoLabs.PBRMaterialImporter
                 bool resolution = Regex.IsMatch(token, @"^(\d{1,2}k|\d{3,5}px|\d{3,5})$") &&
                                   (!int.TryParse(token, out int numeric) || numeric >= 256);
                 bool udim = int.TryParse(token, out int udimValue) && udimValue >= 1001 && udimValue <= 1999;
-                if (!UtilityTokens.Contains(token) && !resolution && !udim)
+                if (!utilityTokens.Contains(token) && !resolution && !udim)
                     break;
                 tokens.RemoveAt(tokens.Count - 1);
             }
