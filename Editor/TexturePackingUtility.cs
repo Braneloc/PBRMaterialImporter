@@ -11,9 +11,9 @@ namespace ExoLabs.PBRMaterialImporter
     {
         sealed class PixelData
         {
-            internal readonly int Width;
-            internal readonly int Height;
-            internal readonly Color32[] Pixels;
+            internal int Width { get; }
+            internal int Height { get; }
+            internal Color32[] Pixels { get; }
 
             internal PixelData(int width, int height, Color32[] pixels)
             {
@@ -25,9 +25,9 @@ namespace ExoLabs.PBRMaterialImporter
 
         readonly struct ChannelSource
         {
-            internal readonly TextureEntry Entry;
-            internal readonly TextureChannel Channel;
-            internal readonly bool Invert;
+            internal TextureEntry Entry { get; }
+            internal TextureChannel Channel { get; }
+            internal bool Invert { get; }
 
             internal ChannelSource(TextureEntry entry, TextureChannel channel, bool invert = false)
             {
@@ -124,10 +124,7 @@ namespace ExoLabs.PBRMaterialImporter
             return AssetDatabase.LoadAssetAtPath<Texture2D>(outputPath);
         }
 
-        internal static Texture2D BuildBaseColorAlpha(
-            TextureEntry baseColor,
-            TextureEntry opacity,
-            string outputPath)
+        internal static Texture2D BuildBaseColorAlpha(TextureEntry baseColor, TextureEntry opacity, string outputPath)
         {
             if (opacity == null || opacity.Texture == null)
                 return baseColor?.Texture;
@@ -156,10 +153,7 @@ namespace ExoLabs.PBRMaterialImporter
             return AssetDatabase.LoadAssetAtPath<Texture2D>(outputPath);
         }
 
-        internal static Texture2D BuildSpecularSmoothnessMap(
-            TextureEntry specular,
-            Texture2D surfaceMap,
-            string outputPath)
+        internal static Texture2D BuildSpecularSmoothnessMap(TextureEntry specular, Texture2D surfaceMap, string outputPath)
         {
             PixelData specularData = specular?.Texture == null ? null : ReadPixels(specular.Texture, false);
             PixelData surfaceData = surfaceMap == null ? null : ReadPixels(surfaceMap, true);
@@ -233,11 +227,7 @@ namespace ExoLabs.PBRMaterialImporter
             return !string.IsNullOrEmpty(reason);
         }
 
-        static void ApplyPackedLayout(
-            TextureEntry packed,
-            ref ChannelSource? metallic,
-            ref ChannelSource? ao,
-            ref ChannelSource? smoothness)
+        static void ApplyPackedLayout(TextureEntry packed, ref ChannelSource? metallic, ref ChannelSource? ao, ref ChannelSource? smoothness)
         {
             switch (packed.Semantic)
             {
@@ -363,13 +353,7 @@ namespace ExoLabs.PBRMaterialImporter
             return (Color32)Color.Lerp(Color.Lerp(c00, c10, tx), Color.Lerp(c01, c11, tx), ty);
         }
 
-        static void WritePng(
-            string assetPath,
-            Color32[] pixels,
-            int width,
-            int height,
-            bool linear,
-            bool alphaIsTransparency = false)
+        static void WritePng(string assetPath, Color32[] pixels, int width, int height, bool linear, bool alphaIsTransparency = false)
         {
             Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false, linear);
             try
