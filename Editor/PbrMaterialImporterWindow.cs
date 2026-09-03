@@ -9,7 +9,7 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal sealed class PbrMaterialImporterWindow : EditorWindow
     {
-        const float DropAreaHeight = 92f;
+        const float dropAreaHeight = 92f;
 
         [SerializeField] List<DetectedTextureSet> textureSets = new List<DetectedTextureSet>();
         [SerializeField] RenderPipelineTarget pipeline = RenderPipelineTarget.Auto;
@@ -98,7 +98,7 @@ namespace ExoLabs.PBRMaterialImporter
 
         void DrawDropArea()
         {
-            Rect rect = GUILayoutUtility.GetRect(0f, DropAreaHeight, GUILayout.ExpandWidth(true));
+            Rect rect = GUILayoutUtility.GetRect(0f, dropAreaHeight, GUILayout.ExpandWidth(true));
             GUI.Box(rect, "Drop textures or folders here\n(Project assets and files from Explorer are supported)", dropStyle);
 
             Event current = Event.current;
