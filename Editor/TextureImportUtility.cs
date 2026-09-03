@@ -9,14 +9,14 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class TextureImportUtility
     {
-        static readonly HashSet<string> SupportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        static readonly HashSet<string> supportedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             ".png", ".jpg", ".jpeg", ".tga", ".tif", ".tiff", ".bmp", ".exr", ".hdr", ".psd"
         };
 
         internal static bool IsSupportedImage(string path)
         {
-            return !string.IsNullOrEmpty(path) && SupportedExtensions.Contains(Path.GetExtension(path));
+            return !string.IsNullOrEmpty(path) && supportedExtensions.Contains(Path.GetExtension(path));
         }
 
         internal static void ConfigureSource(TextureEntry entry)
