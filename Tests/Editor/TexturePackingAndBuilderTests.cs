@@ -9,22 +9,22 @@ namespace ExoLabs.PBRMaterialImporter.Tests
 {
     internal sealed class TexturePackingAndBuilderTests
     {
-        const string TestRoot = "Assets/__PBRMaterialImporterTests";
-        const string MeshySampleFolder = "Assets/Meshy_AI_Damien_Cross_0829203445_texture_fbx/Meshy_AI_Damien_Cross_0829203445_texture_fbx";
+        const string testRoot = "Assets/__PBRMaterialImporterTests";
+        const string meshySampleFolder = "Assets/Meshy_AI_Damien_Cross_0829203445_texture_fbx/Meshy_AI_Damien_Cross_0829203445_texture_fbx";
 
         [SetUp]
         public void SetUp()
         {
-            if (AssetDatabase.IsValidFolder(TestRoot))
-                AssetDatabase.DeleteAsset(TestRoot);
-            TextureImportUtility.EnsureAssetFolder(TestRoot);
+            if (AssetDatabase.IsValidFolder(testRoot))
+                AssetDatabase.DeleteAsset(testRoot);
+            TextureImportUtility.EnsureAssetFolder(testRoot);
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (AssetDatabase.IsValidFolder(TestRoot))
-                AssetDatabase.DeleteAsset(TestRoot);
+            if (AssetDatabase.IsValidFolder(testRoot))
+                AssetDatabase.DeleteAsset(testRoot);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             set.Textures.Add(CreateEntry(metallic, TextureSemantic.Metallic));
             set.Textures.Add(CreateEntry(roughness, TextureSemantic.Roughness));
 
-            const string outputPath = TestRoot + "/Test_MaskMap.png";
+            const string outputPath = testRoot + "/Test_MaskMap.png";
             TexturePackingUtility.BuildMaskMap(set, outputPath, new HashSet<TextureEntry>(), out bool wroteTexture);
             Color32[] pixels = ReadPng(outputPath);
 
@@ -83,7 +83,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             TextureEntry baseEntry = CreateEntry(baseColor, TextureSemantic.BaseColor);
             TextureEntry opacityEntry = CreateEntry(opacity, TextureSemantic.Opacity);
 
-            const string outputPath = TestRoot + "/Leaves_BaseColorAlpha.png";
+            const string outputPath = testRoot + "/Leaves_BaseColorAlpha.png";
             TexturePackingUtility.BuildBaseColorAlpha(baseEntry, opacityEntry, outputPath);
             Color32[] pixels = ReadPng(outputPath);
 
@@ -106,7 +106,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             {
                 Pipeline = RenderPipelineTarget.HighDefinition,
                 OutputMode = OutputMode.CustomFolder,
-                CustomOutputFolder = TestRoot,
+                CustomOutputFolder = testRoot,
                 ConfigureSourceImporters = true,
                 CombineOpacityWithBaseColor = true,
                 DiscardNeutralTextures = true,
@@ -123,10 +123,10 @@ namespace ExoLabs.PBRMaterialImporter.Tests
         [Test]
         public void MeshyProjectSampleBuildsAsOneCompleteMaterialWhenAvailable()
         {
-            if (!AssetDatabase.IsValidFolder(MeshySampleFolder))
+            if (!AssetDatabase.IsValidFolder(meshySampleFolder))
                 Assert.Ignore("The optional Meshy acceptance fixture is not present in this project.");
 
-            List<Texture2D> textures = AssetDatabase.FindAssets("t:Texture2D", new[] { MeshySampleFolder })
+            List<Texture2D> textures = AssetDatabase.FindAssets("t:Texture2D", new[] { meshySampleFolder })
                 .Select(AssetDatabase.GUIDToAssetPath)
                 .Select(AssetDatabase.LoadAssetAtPath<Texture2D>)
                 .Where(texture => texture != null)
@@ -148,7 +148,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             {
                 Pipeline = RenderPipelineTarget.HighDefinition,
                 OutputMode = OutputMode.CustomFolder,
-                CustomOutputFolder = TestRoot,
+                CustomOutputFolder = testRoot,
                 ConfigureSourceImporters = false,
                 CombineOpacityWithBaseColor = true,
                 DiscardNeutralTextures = true,
@@ -225,7 +225,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             {
                 Pipeline = pipeline,
                 OutputMode = OutputMode.CustomFolder,
-                CustomOutputFolder = TestRoot,
+                CustomOutputFolder = testRoot,
                 ConfigureSourceImporters = true,
                 CombineOpacityWithBaseColor = true,
                 DiscardNeutralTextures = true,
@@ -246,7 +246,7 @@ namespace ExoLabs.PBRMaterialImporter.Tests
             Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false, true);
             texture.SetPixels32(pixels);
             texture.Apply(false, false);
-            string assetPath = TestRoot + "/" + fileName;
+            string assetPath = testRoot + "/" + fileName;
             File.WriteAllBytes(TextureImportUtility.AssetPathToFullPath(assetPath), texture.EncodeToPNG());
             Object.DestroyImmediate(texture);
             AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceSynchronousImport);
