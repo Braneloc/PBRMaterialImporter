@@ -110,10 +110,10 @@ namespace ExoLabs.PBRMaterialImporter
         internal TextureEntry(Texture2D texture, TextureNameAnalysis analysis)
         {
             this.texture = texture;
-            semantic = analysis.semantic;
-            channel = analysis.defaultChannel;
-            flipNormalGreen = analysis.flipNormalGreen;
-            detectionNote = analysis.note;
+            semantic = analysis.Semantic;
+            channel = analysis.DefaultChannel;
+            flipNormalGreen = analysis.FlipNormalGreen;
+            detectionNote = analysis.Note;
         }
     }
 
@@ -191,40 +191,40 @@ namespace ExoLabs.PBRMaterialImporter
 
     internal readonly struct TextureNameAnalysis
     {
-        internal readonly TextureSemantic semantic;
-        internal readonly string stem;
-        internal readonly TextureChannel defaultChannel;
-        internal readonly bool flipNormalGreen;
-        internal readonly string note;
+        internal TextureSemantic Semantic { get; }
+        internal string Stem { get; }
+        internal TextureChannel DefaultChannel { get; }
+        internal bool FlipNormalGreen { get; }
+        internal string Note { get; }
 
         internal TextureNameAnalysis(TextureSemantic semantic, string stem, TextureChannel defaultChannel, bool flipNormalGreen, string note)
         {
-            this.semantic = semantic;
-            this.stem = stem;
-            this.defaultChannel = defaultChannel;
-            this.flipNormalGreen = flipNormalGreen;
-            this.note = note;
+            Semantic = semantic;
+            Stem = stem;
+            DefaultChannel = defaultChannel;
+            FlipNormalGreen = flipNormalGreen;
+            Note = note;
         }
     }
 
     internal sealed class MaterialImportSettings
     {
-        internal RenderPipelineTarget pipeline;
-        internal OutputMode outputMode;
-        internal string customOutputFolder;
-        internal bool configureSourceImporters;
-        internal bool combineOpacityWithBaseColor;
-        internal bool discardNeutralTextures;
-        internal bool updateExistingAssets;
+        internal RenderPipelineTarget Pipeline { get; set; }
+        internal OutputMode OutputMode { get; set; }
+        internal string CustomOutputFolder { get; set; }
+        internal bool ConfigureSourceImporters { get; set; }
+        internal bool CombineOpacityWithBaseColor { get; set; }
+        internal bool DiscardNeutralTextures { get; set; }
+        internal bool UpdateExistingAssets { get; set; }
     }
 
     internal sealed class MaterialImportResult
     {
-        internal Material material;
-        internal string materialPath;
-        internal string maskMapPath;
-        internal string specularSmoothnessPath;
-        internal string baseColorAlphaPath;
-        internal readonly List<string> warnings = new List<string>();
+        internal Material Material { get; set; }
+        internal string MaterialPath { get; set; }
+        internal string MaskMapPath { get; set; }
+        internal string SpecularSmoothnessPath { get; set; }
+        internal string BaseColorAlphaPath { get; set; }
+        internal List<string> Warnings { get; } = new List<string>();
     }
 }
