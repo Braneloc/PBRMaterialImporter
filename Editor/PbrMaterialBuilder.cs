@@ -11,8 +11,8 @@ namespace ExoLabs.PBRMaterialImporter
 {
     internal static class PbrMaterialBuilder
     {
-        const string HdrpShaderName = "HDRP/Lit";
-        const string UrpShaderName = "Universal Render Pipeline/Lit";
+        const string hdrpShaderName = "HDRP/Lit";
+        const string urpShaderName = "Universal Render Pipeline/Lit";
 
         internal static MaterialImportResult Build(DetectedTextureSet set, MaterialImportSettings settings)
         {
@@ -125,8 +125,8 @@ namespace ExoLabs.PBRMaterialImporter
                 }
                 else
                 {
-                    Shader hdrp = Shader.Find(HdrpShaderName);
-                    Shader urp = Shader.Find(UrpShaderName);
+                    Shader hdrp = Shader.Find(hdrpShaderName);
+                    Shader urp = Shader.Find(urpShaderName);
                     if (hdrp != null && urp == null)
                         resolved = RenderPipelineTarget.HighDefinition;
                     else if (urp != null && hdrp == null)
@@ -139,7 +139,7 @@ namespace ExoLabs.PBRMaterialImporter
                 }
             }
 
-            string shaderName = resolved == RenderPipelineTarget.Universal ? UrpShaderName : HdrpShaderName;
+            string shaderName = resolved == RenderPipelineTarget.Universal ? urpShaderName : hdrpShaderName;
             shader = Shader.Find(shaderName);
             if (shader != null)
                 return true;
