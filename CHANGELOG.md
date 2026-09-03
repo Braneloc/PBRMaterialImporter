@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.5 - 2026-09-03
+
+- Standardised private/internal fields and constants to match Exo-Labs / Braneloc camelCase field conventions.
+- Converted shared internal DTO-style members to PascalCase properties where they form an internal API.
+
 ## 1.1.4 - 2026-08-30
 
 - Standardised project-authored wording and internal helper names using British English while retaining required Unity API, shader-property, manifest-schema, and third-party texture names.
